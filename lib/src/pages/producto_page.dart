@@ -22,7 +22,7 @@ class _ProductoPageState extends State<ProductoPage> {
 
   ProductoModel producto = new ProductoModel();
   bool _guardando = false;
-  late File? foto;
+  File? foto;
 
   @override
   Widget build(BuildContext context) {
@@ -39,13 +39,15 @@ class _ProductoPageState extends State<ProductoPage> {
         title: Text('Producto'),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              _seleccionarFoto(ImageSource.gallery);
+            },
             icon: Icon(Icons.photo_size_select_actual),
           ),
           /*
           IconButton(
             icon: Icon(Icons.photo_size_select_actual),
-            onPressed: _seleccionarFoto(ImageSource.gallery),
+            onPressed: 
           ),
            IconButton(
             icon: Icon(Icons.camera_alt),
@@ -169,11 +171,17 @@ class _ProductoPageState extends State<ProductoPage> {
       //TODO: tengo que hacer esto
       return Container();
     } else {
-      return Image(
-        image: AssetImage('assets/no-image.png'),
-        height: 300.0,
-        fit: BoxFit.cover,
-      );
+      return foto == null
+          ? Image(
+              image: AssetImage('assets/no-image.png'),
+              height: 300.0,
+              fit: BoxFit.cover,
+            )
+          : Image.file(
+              foto!,
+              height: 300.0,
+              fit: BoxFit.cover,
+            );
     }
   }
 
